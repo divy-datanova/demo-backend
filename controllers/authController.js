@@ -28,7 +28,7 @@ const getCookie = (req, name) =>
 
 // Sends the browser back to the frontend with either { token } or { error } in the URL hash
 const redirectToClient = (res, params) =>
-  res.redirect(`${process.env.CLIENT_URL}/auth/callback#${new URLSearchParams(params)}`);
+  res.redirect(`${process.env.CLIENT_URL.replace(/\/+$/, "")}/auth/callback#${new URLSearchParams(params)}`);
 
 // POST /api/auth/login  { email, password }
 const login = async (req, res) => {

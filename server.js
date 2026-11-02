@@ -40,7 +40,8 @@ const ensureReady = async (req, res, next) => {
   next();
 };
 
-app.use(cors({ origin: process.env.CLIENT_URL }));
+// Browsers send the Origin without a trailing slash, so strip one from CLIENT_URL
+app.use(cors({ origin: process.env.CLIENT_URL?.replace(/\/+$/, "") }));
 app.use(express.json());
 
 app.get(["/", "/api/health"], (req, res) => res.json({ status: "ok" }));
