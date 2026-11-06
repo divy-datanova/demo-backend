@@ -1,12 +1,12 @@
 const express = require("express");
-const { login, googleAuth, googleCallback, getMe } = require("../controllers/authController");
-const { protect } = require("../middleware/authMiddleware");
+const authcore = require("../config/authcore");
+const { getMe } = require("../controllers/authController");
 
 const router = express.Router();
 
-router.post("/login", login);
-router.get("/google", googleAuth);
-router.get("/google/callback", googleCallback);
-router.get("/me", protect, getMe);
+// GET /login, GET /callback, POST /logout and POST /backchannel-logout (AuthCore's logout
+// notices, server to server): sign-in and logout through AuthCore
+router.use(authcore.routes);
+router.get("/me", authcore.requireAuth, getMe);
 
 module.exports = router;
